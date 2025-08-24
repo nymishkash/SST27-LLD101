@@ -1,5 +1,4 @@
+// Base vehicle interface - can be extended as needed
 public interface Vehicle {
-    void startEngine();
-    void pedal(int effort);
-    void recharge(int kWh);
+    // Common vehicle behavior could go here
 }

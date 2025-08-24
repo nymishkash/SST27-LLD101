@@ -1,5 +1,3 @@
 public class Bird {
-     void fly(){
-         System.out.println("Flap!"); 
-        } 
-    }
+    // Base bird class - no flying behavior assumed
+}

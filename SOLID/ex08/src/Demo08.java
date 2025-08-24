@@ -1,6 +1,12 @@
 public class Demo08 {
     public static void main(String[] args) {
-        Vehicle v = new Bicycle();
-        v.startEngine(); // crash
+        Bicycle bicycle = new Bicycle();
+        bicycle.pedal(5);
+        
+        Car car = new Car();
+        car.startEngine();
+        
+        ElectricCar electricCar = new ElectricCar();
+        electricCar.recharge(50);
     }
 }
