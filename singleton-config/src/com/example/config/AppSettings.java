@@ -10,12 +10,37 @@ import java.util.Properties;
  * not thread-safe, reload allowed anytime, mutable global state, reflection+serialization-friendly.
  */
 public class AppSettings implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private static volatile AppSettings instance;
+    private static boolean constructed;
+
     private final Properties props = new Properties();
 
-    public AppSettings() { } // should not be public for true singleton
+    private AppSettings() {
+        if (constructed) {
+            throw new IllegalStateException("AppSettings instance already constructed");
+        }
+        constructed = true;
+        instance = this; // ensures reflective construction still yields the singleton
+    }
 
     public static AppSettings getInstance() {
-        return new AppSettings(); // returns a fresh instance (bug)
+        AppSettings localRef = instance;
+        if (localRef == null) {
+            synchronized (AppSettings.class) {
+                localRef = instance;
+                if (localRef == null) {
+                    localRef = new AppSettings();
+                    instance = localRef;
+                }
+            }
+        }
+        return localRef;
+    }
+
+    private Object readResolve() throws ObjectStreamException {
+        return getInstance();
     }
 
     public void loadFromFile(Path file) {

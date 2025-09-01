@@ -5,8 +5,10 @@ public class TryIt {
         ProfileService svc = new ProfileService();
         UserProfile p = svc.createMinimal("u1", "a@b.com");
         System.out.println("Before: " + p.getEmail());
-        p.setEmail("evil@example.com"); // demonstrates mutability problem
-        System.out.println("After:  " + p.getEmail());
-        System.out.println("=> In the solution, this setter disappears and object becomes immutable.");
+
+        // no setter exists now; create a new instance with a display name instead
+        UserProfile p2 = svc.withDisplayName(p, "VeryLongDisplayNameThatWillBeTrimmedIfItExceedsTheAllowedLength........................................................................");
+        System.out.println("After change (email unchanged):  " + p2.getEmail());
+        System.out.println("Display name set: " + p2.getDisplayName());
     }
 }
